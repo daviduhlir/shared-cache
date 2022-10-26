@@ -1,0 +1,27 @@
+{
+  "name": "@david.uhlir/shared-cache",
+  "version": "1.0.0",
+  "description": "Cache shared over all forks in cluster",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "rimraf ./dist && tsc",
+    "prettier-format": "prettier --config .prettierrc.json 'lib/**/*.ts' --write"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/daviduhlir/shared-cache.git"
+  },
+  "keywords": [],
+  "author": "David Uhlíř",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^13.11.1",
+    "prettier": "^2.6.2",
+    "rimraf": "^2.6.2",
+    "typescript": "^3.8.3"
+  },
+  "dependencies": {
+    "@david.uhlir/ipc-method": "^1.0.13"
+  }
+}
