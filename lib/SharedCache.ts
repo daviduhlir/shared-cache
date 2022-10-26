@@ -18,7 +18,7 @@ export class SharedCache {
    * Set data to cache
    */
   static async setData<T>(key: string, value: T) {
-    SharedCache.storage.getData(key, value)
+    SharedCache.storage.setData(key, value)
   }
 
   /**
