@@ -7,7 +7,8 @@
   "scripts": {
     "build": "rimraf ./dist && tsc",
     "prettier-format": "prettier --config .prettierrc.json 'lib/**/*.ts' --write",
-    "release": "./scripts/release.sh"
+    "release": "./scripts/release.sh",
+    "test": "echo nothing"
   },
   "repository": {
     "type": "git",
