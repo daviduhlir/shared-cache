@@ -6,7 +6,8 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "rimraf ./dist && tsc",
-    "prettier-format": "prettier --config .prettierrc.json 'lib/**/*.ts' --write"
+    "prettier-format": "prettier --config .prettierrc.json 'lib/**/*.ts' --write",
+    "release": "./scripts/release.sh"
   },
   "repository": {
     "type": "git",
