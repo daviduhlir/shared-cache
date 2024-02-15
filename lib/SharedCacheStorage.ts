@@ -3,7 +3,7 @@ export class SharedCacheStorage {
 
   async getData<T>(key: string, defaultValue?: T): Promise<T> {
     const item = this.data.hasOwnProperty(key) ? this.data[key] : null
-    if (item.expiration && item.expiration > Date.now()) {
+    if (item.expiration && item.expiration < Date.now()) {
       delete this.data[key]
       return defaultValue
     }
@@ -25,7 +25,7 @@ export class SharedCacheStorage {
     const keys = Object.keys(this.data)
     for(const key of keys) {
       const item = this.data[key]
-      if (item.expiration && item.expiration > Date.now()) {
+      if (item.expiration && item.expiration < Date.now()) {
         delete this.data[key]
       }
     }
