@@ -85,8 +85,8 @@ export class SharedStorage {
     SharedStorage.storage.setValue<T>(key, value, ttl)
   }
 
-  static async prolongValue<T = any>(key: string, ttl?: number): Promise<void> {
-    SharedStorage.storage.prolongValue<T>(key, ttl)
+  static async prolongValue(key: string, ttl?: number): Promise<void> {
+    SharedStorage.storage.prolongValue(key, ttl)
   }
 
   static async getValue<T = any>(key: string, defaultvalue: T = null): Promise<T> {
@@ -113,7 +113,7 @@ export class SharedStorage {
       return
     }
 
-    if (!cluster.isWorker) {
+    if (!cluster.default.isWorker) {
       SharedStorage.storage = new SharedStorageHandler()
       new IpcMethodHandler(['shared-cache-topic'], SharedStorage.storage)
     } else {
@@ -142,8 +142,8 @@ export class SharedStorageAlias {
   async setValue<T = any>(key: string, value: T, ttl?: number): Promise<void> {
     return SharedStorage.setValue<T>(this.prefix + '/' + key, value, ttl)
   }
-  async prolongValue<T = any>(key: string, ttl?: number): Promise<void> {
-    return SharedStorage.prolongValue<T>(this.prefix + '/' + key, ttl)
+  async prolongValue(key: string, ttl?: number): Promise<void> {
+    return SharedStorage.prolongValue(this.prefix + '/' + key, ttl)
   }
   async getValue<T = any>(key: string, defaultvalue: T = null): Promise<T> {
     return SharedStorage.getValue<T>(this.prefix + '/' + key, defaultvalue)
