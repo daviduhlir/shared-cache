@@ -1,5 +1,6 @@
 import { IpcMethodHandler, IpcPublicPromiseMethodsObject } from '@david.uhlir/ipc-method'
-import * as cluster from 'cluster'
+import * as clusterRaw from 'cluster'
+const cluster: typeof clusterRaw.default = clusterRaw as any
 
 export interface Build {
   id: string
@@ -113,7 +114,7 @@ export class SharedStorage {
       return
     }
 
-    if (!cluster.default.isWorker) {
+    if (!cluster.isWorker) {
       SharedStorage.storage = new SharedStorageHandler()
       new IpcMethodHandler(['shared-cache-topic'], SharedStorage.storage)
     } else {
@@ -161,3 +162,21 @@ export class SharedStorageAlias {
 }
 
 SharedStorage[StorageInitializator]()
+
+export class SharedCache extends SharedStorage {
+  static async setData<T = any>(key: string, value: T, ttl?: number): Promise<void> {
+    return SharedStorage.setValue<T>('data/' + key, value, ttl)
+  }
+
+  static async getData<T = any>(key: string, defaultvalue: T = null): Promise<T> {
+    return SharedStorage.getValue<T>('data/' + key, defaultvalue)
+  }
+
+  static async removeData(key: string): Promise<void> {
+    return SharedStorage.removeKey('data/' + key)
+  }
+
+  static async existsData(key: string): Promise<boolean> {
+    return SharedStorage.exists('data/' + key)
+  }
+}

@@ -1,8 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SharedStorageAlias = exports.SharedStorage = exports.StorageInitializator = void 0;
+exports.SharedCache = exports.SharedStorageAlias = exports.SharedStorage = exports.StorageInitializator = void 0;
 const ipc_method_1 = require("@david.uhlir/ipc-method");
-const cluster = require("cluster");
+const clusterRaw = require("cluster");
+const cluster = clusterRaw;
 exports.StorageInitializator = Symbol();
 class SharedStorageHandler {
     constructor() {
@@ -81,7 +82,7 @@ class SharedStorage {
         if (SharedStorage.storage) {
             return;
         }
-        if (!cluster.default.isWorker) {
+        if (!cluster.isWorker) {
             SharedStorage.storage = new SharedStorageHandler();
             new ipc_method_1.IpcMethodHandler(['shared-cache-topic'], SharedStorage.storage);
         }
@@ -128,4 +129,19 @@ class SharedStorageAlias {
 }
 exports.SharedStorageAlias = SharedStorageAlias;
 SharedStorage[exports.StorageInitializator]();
+class SharedCache extends SharedStorage {
+    static async setData(key, value, ttl) {
+        return SharedStorage.setValue('data/' + key, value, ttl);
+    }
+    static async getData(key, defaultvalue = null) {
+        return SharedStorage.getValue('data/' + key, defaultvalue);
+    }
+    static async removeData(key) {
+        return SharedStorage.removeKey('data/' + key);
+    }
+    static async existsData(key) {
+        return SharedStorage.exists('data/' + key);
+    }
+}
+exports.SharedCache = SharedCache;
 //# sourceMappingURL=SharedCache.js.map

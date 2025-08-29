@@ -1,5 +1,6 @@
-import * as cluster from 'cluster'
 import { SharedCache } from '@david.uhlir/shared-cache'
+import * as clusterRaw from 'cluster'
+const cluster: typeof clusterRaw.default = clusterRaw as any
 
 /**
  * Start test

@@ -45,4 +45,10 @@ export declare class SharedStorageAlias {
     removeKey(key: string): Promise<void>;
     exists(key: string): Promise<boolean>;
 }
+export declare class SharedCache extends SharedStorage {
+    static setData<T = any>(key: string, value: T, ttl?: number): Promise<void>;
+    static getData<T = any>(key: string, defaultvalue?: T): Promise<T>;
+    static removeData(key: string): Promise<void>;
+    static existsData(key: string): Promise<boolean>;
+}
 export {};
